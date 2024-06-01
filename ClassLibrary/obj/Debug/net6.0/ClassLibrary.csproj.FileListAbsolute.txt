@@ -1,0 +1,14 @@
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\bin\Debug\net6.0\ClassLibrary.deps.json
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\bin\Debug\net6.0\ClassLibrary.runtimeconfig.json
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\bin\Debug\net6.0\ClassLibrary.dll
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\bin\Debug\net6.0\ClassLibrary.pdb
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.csproj.AssemblyReference.cache
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.AssemblyInfoInputs.cache
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.AssemblyInfo.cs
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.csproj.CoreCompileInputs.cache
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.dll
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\refint\ClassLibrary.dll
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.pdb
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ClassLibrary.genruntimeconfig.cache
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\ClassLibrary\obj\Debug\net6.0\ref\ClassLibrary.dll
