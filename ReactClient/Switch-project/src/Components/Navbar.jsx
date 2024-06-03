@@ -32,7 +32,7 @@ const Navbar = (props) => {
         </Link>}
         {factoryName && (
           <div className="navbar-greeting">
-            <img src='http://localhost:5174/Images/person outline.png' alt="Profile Icon" className="profile-icon" />
+            <img src='/Images/person outline.png' alt="Profile Icon" className="profile-icon" />
             <p>שלום {factoryName}</p>
           </div>
         )}

@@ -1,5 +1,6 @@
 ﻿using ClassLibrary.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Net;
 using System.Runtime.CompilerServices;
 using WebApplication.DTO;
@@ -12,7 +13,8 @@ namespace WebApplication.Controllers
     [ApiController]
     public class AddNewOfferController : ControllerBase
     {
-        SwitchContext db = new SwitchContext();        
+        SwitchContext db = new SwitchContext();
+        private static Random random = new Random();
 
         [HttpPost]//העלאת הצעה חדשה לאתר 
         [Route("AddOffer")]
@@ -21,7 +23,7 @@ namespace WebApplication.Controllers
             try
             {
                 Offer o1 = new Offer();
-                o1.OfferCode = NewOffer.OfferCode;
+                o1.OfferCode = random.Next(1, int.MaxValue);
                 o1.OfferType = NewOffer.OfferType;
                 o1.StartDate = NewOffer.StartDate;
                 o1.EndDate = NewOffer.EndDate;

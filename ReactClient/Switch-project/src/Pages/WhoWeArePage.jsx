@@ -1,14 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import PicCover from '../Components/PicCover';
 import Box from '@mui/material/Box';
+import Loader from '../Components/Loader';
 
 export const WhoWeArePage = () => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => { //פונקציה של JS שעושה השהייה להרצה 
+      setLoading(false);
+    }, 300); 
+
+    return () => clearTimeout(timer); // מבטיח שאם הקומפוננטה מתנתקת לפני סיום הזמן, הזמן שהקצבנו נמחק כדי למנוע ניסיון לעדכן את המצב של קומפוננטה לא מותקנת.
+  }, []);
+
   return (
     <div>
       <br />
+      {loading && <Loader />}
+      {!loading && (
+        <>
       <h1 style={{ paddingTop: '40px', color: '#378143' }}>מי אנחנו</h1>
       <div style={{ position: 'relative', height: '100vh' }}>
-      <PicCover src="http://localhost:5174/Images/whoweare.jpg" />
+      <PicCover src="/Images/whoweare.jpg" />
 
         <Box
           sx={{
@@ -40,9 +54,11 @@ export const WhoWeArePage = () => {
           <h1>
             הזבל שלו הוא האוצר שלך
           </h1>
-          <img src='http://localhost:5174/Images\icons-recycle.png' style={{height:"50px"}}></img>
+          <img src='/Images\icons-recycle.png' style={{height:"50px"}}></img>
         </Box>
       </div>
+      </>
+      )}
     </div>
   );
 };

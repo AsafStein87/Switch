@@ -3,7 +3,7 @@
     public class OfferWasteDTO
     {
         
-        public int OfferCode { get; set; }     
+       // public int OfferCode { get; set; }     
 
         public string OfferType { get; set; }
       

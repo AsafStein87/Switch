@@ -13,7 +13,7 @@ export default function BoxSystemProps() {
       p={2}
       sx={{ border: '2px solid grey' }}
     >
-      This Box uses MUI System props for quick customization.
+     
     </Box>
   );
 }

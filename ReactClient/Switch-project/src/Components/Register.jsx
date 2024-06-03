@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import ComboBox from '../Elements/Dropdown';
-import { Box, TextField } from '@mui/material';
+import { Box, TextField, Typography  } from '@mui/material';
 import Btn from '../Elements/Btn';
+import { useNavigate } from 'react-router-dom'
+
 
 
 export default function Register() {
@@ -12,8 +14,41 @@ export default function Register() {
     const [phone, setPhone] = useState();
     const [FactoryType, setFactoryType] = useState();
     const [FactoryAddress, setFactoryAddress] = useState();
+    const [errors, setErrors] = useState({}); 
+    const navigate = useNavigate();
 
-    function RegisterFunc() {
+
+    function RegisterFunc() { //בדיקות לנתונים של המשתמש
+        const newErrors = {};
+
+        
+        const emailPattern = /\S+@\S+\.\S+/;
+        const phonePattern = /^\d{10}$/; 
+        const passwordPattern = /^(?=.*[0-9]{5,})(?=.*[!@#$%^&*])/; //לפחות 5 ספרות ותו מיוחד
+
+        if (!name) newErrors.name = "נא להזין שם מפעל";
+        if (!email) {
+            newErrors.email = "נא להזין אימייל";
+        } else if (!emailPattern.test(email)) {
+            newErrors.email = "כתובת מייל לא חוקית";
+        }
+        if (!FactoryCode) newErrors.FactoryCode = "נא להזין ח.פ";
+        if (!password) {
+            newErrors.password = "נא להזין סיסמא";
+        } else if (!passwordPattern.test(password)) {
+            newErrors.password = "סיסמא צריכה להכיל לפחות 5 ספרות ותו מיוחד";
+        }        if (!phone) {
+            newErrors.phone = "נא להזין מספר טלפון עד 10 ספרות";
+        } else if (!phonePattern.test(phone)) {
+            newErrors.phone = "נא לרשום ספרות בלבד";
+        }
+        if (!FactoryType) newErrors.FactoryType = "נא לבחור סוג פסולת";
+        if (!FactoryAddress) newErrors.FactoryAddress = "נא להזין כתובת";
+
+        setErrors(newErrors); //עדכון השגיאות באובייקט שגיאות חדשות
+
+        if (Object.keys(newErrors).length > 0) return; //אם יש הודעות שגיאה המשתמש לא יוכל להתקדם
+
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -36,7 +71,9 @@ export default function Register() {
 
         fetch("http://localhost:5116/api/Factory/Register", requestOptions)
             .then((response) => response.text())
-            .then((result) => console.log(result))
+            .then((result) => {console.log(result);
+            navigate('/SignInPage'); //רק בהתחברות מוצלחת יעביר לדף כניסה למערכת
+    })
             .catch((error) => console.error(error));
     }
 
@@ -64,24 +101,33 @@ export default function Register() {
                         textAlign: 'center'
                     }}
                 >
-                    <img style={{ padding: "30px" }} src="Images/register.png" alt="Register Icon" />
+                    <img style={{ padding: "30px" }} src="/Images/register.png" alt="Register Icon" />
                     <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                         <div style={{ flex: 1, marginRight: '10px', display: 'flex', flexDirection: 'column' }}>
-                            <TextField label="E-mail" sx={{ marginBottom: '10px' }} onChange={(e) => setEmail(e.target.value)} />
-                            <TextField label="כתובת" sx={{ marginBottom: '10px' }} onChange={(e) => setFactoryAddress(e.target.value)} />
-                            <TextField label="טלפון" sx={{ marginBottom: '10px' }} onChange={(e) => setPhone(e.target.value)} />
+                            <TextField label="E-mail" sx={{ marginBottom: '10px' }} onChange={(e) => setEmail(e.target.value)} 
+                            error={!!errors.email} //משייך את הערך הבוליאני לפרופ שגיאה בקומפוננטה טקסט פילד
+                            helperText={errors.email}/>
+                            <TextField label="כתובת" sx={{ marginBottom: '10px' }} onChange={(e) => setFactoryAddress(e.target.value)} error={!!errors.FactoryAddress} helperText={errors.FactoryAddress} />
+                            <TextField label="טלפון" sx={{ marginBottom: '10px' }} onChange={(e) => setPhone(e.target.value)}  error={!!errors.phone} helperText={errors.phone}/>
                         </div>
                         <div style={{ flex: 1, marginLeft: '10px', display: 'flex', flexDirection: 'column' }}>
-                            <TextField label="שם החברה" sx={{ marginBottom: '10px' }} onChange={(e) => setName(e.target.value)} />
-                            <TextField label="ח.פ" sx={{ marginBottom: '10px' }} onChange={(e) => setFactoryCode(e.target.value)} />
-                            <TextField label="סיסמא" sx={{ marginBottom: '10px' }} onChange={(e) => setPassword(e.target.value)} />
+                            <TextField label="שם החברה" sx={{ marginBottom: '10px' }} onChange={(e) => setName(e.target.value)} error={!!errors.name} helperText={errors.name}/>
+                            <TextField label="ח.פ" sx={{ marginBottom: '10px' }} onChange={(e) => setFactoryCode(e.target.value)}  error={!!errors.FactoryCode} helperText={errors.FactoryCode}/>
+                            <TextField label="סיסמא" sx={{ marginBottom: '10px' }} onChange={(e) => setPassword(e.target.value)} error={!!errors.password} helperText={errors.password}/>
                         </div>
                     </div>
 
                     <br />
                     <ComboBox sx={{ marginBottom: '10px' }} onSelect={(val) => setFactoryType(val)} />
+                    {errors.FactoryType && (
+                    <Typography color="error" sx={{ marginBottom: '10px' }}>
+                        {errors.FactoryType}
+                    </Typography>
+                )}
                     <br />                    
+                    
                     <Btn onClick={RegisterFunc}>שמור</Btn>
+                 
                 </Box>
             </div>
         </>
