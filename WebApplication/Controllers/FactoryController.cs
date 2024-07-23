@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using System.Runtime.CompilerServices;
+using System.Web;
 using WebApplication.DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -36,7 +37,7 @@ namespace WebApplication.Controllers
                 return BadRequest(e.Message);
             }
         }
-           
+
         [HttpPost]
         [Route("Register")]//הרשמה למערכת  
         public dynamic Post([FromBody] FactoryDTO newFactory)
@@ -49,8 +50,8 @@ namespace WebApplication.Controllers
                 f1.Password = newFactory.Password;
                 f1.FactoryPhone = newFactory.FactoryPhone;
                 f1.FactoryCode = newFactory.FactoryCode;
-                f1.FactoryAddress = newFactory.FactoryAddress; 
-                f1.FactoryType = newFactory.FactoryType; 
+                f1.FactoryAddress = newFactory.FactoryAddress;
+                f1.FactoryType = newFactory.FactoryType;
                 db.Factories.Add(f1);
                 db.SaveChanges();
                 return Ok(f1);
@@ -59,7 +60,29 @@ namespace WebApplication.Controllers
             {
                 return BadRequest(e.Message);
             }
-        }      
-               
+        }
+
+        [HttpGet("GetFactoryCode/{factoryName}")]
+        public dynamic Get(string factoryName)
+        {
+            try
+            {
+                string decodedFactoryAddr = HttpUtility.UrlDecode(factoryName);
+                var factoryUser = db.Factories.FirstOrDefault(x => x.FactoryAddress == decodedFactoryAddr);
+                if (factoryUser != null)
+                { 
+                    return Ok(factoryUser.FactoryCode);
+                }
+                else
+                {
+                    return NotFound("Factory code and name not found");
+                }
+
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

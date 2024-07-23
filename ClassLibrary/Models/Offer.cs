@@ -28,8 +28,10 @@ public partial class Offer
     public int? FactoryCode { get; set; }
 
     public int? WasteCode { get; set; }
-
+    public ICollection<ChatMessage> ChatMessages { get; set; }
     public virtual ICollection<ActWasteRemoval> ActWasteRemovals { get; set; } = new List<ActWasteRemoval>();
+    public ICollection<FavoriteOffers> FavoriteOffers { get; set; }
+
 
     public virtual Factory? FactoryCodeNavigation { get; set; }
 

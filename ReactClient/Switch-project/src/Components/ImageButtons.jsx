@@ -13,9 +13,9 @@ const ImageButtons = ({ onImageClick }) => {
 
   const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleClick = (alt) => {
-    setSelectedOption(alt);
-    onImageClick(alt);
+  const handleClick = (alt) => { //כאשר תמונה נלחצת
+    setSelectedOption(alt); //בחירת המשתמש
+    onImageClick(alt); //מועבר בפרופ
   };
 
   return (

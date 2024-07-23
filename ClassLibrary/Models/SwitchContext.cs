@@ -8,18 +8,14 @@ namespace ClassLibrary.Models;
 public partial class SwitchContext : DbContext
 {
 
-    
     public SwitchContext()
     {
-
-
     }
 
     public SwitchContext(DbContextOptions<SwitchContext> options)
-        : base(options)
-    {
-    }
-
+        : base(options) { }
+    public DbSet<ChatMessage> ChatMessages { get; set; }
+   
     public virtual DbSet<ActWasteRemoval> ActWasteRemovals { get; set; }
 
 
@@ -28,6 +24,7 @@ public partial class SwitchContext : DbContext
     public virtual DbSet<Factory> Factories { get; set; }
 
     public virtual DbSet<IndustrialArea> IndustrialAreas { get; set; }
+    public virtual DbSet<FavoriteOffers> FavoriteOffers { get; set; }
 
     public virtual DbSet<Offer> Offers { get; set; }
 
@@ -52,6 +49,11 @@ public partial class SwitchContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<ChatMessage>()
+           .HasOne(cm => cm.Offer)
+           .WithMany(o => o.ChatMessages)
+           .HasForeignKey(cm => cm.OfferCode);
         modelBuilder.Entity<ActWasteRemoval>(entity =>
         {
             entity.HasKey(e => new { e.WasteRemovalCode, e.OfferCode }).HasName("PK__ActWaste__D4C4A03093886A01");
@@ -71,7 +73,32 @@ public partial class SwitchContext : DbContext
                 .HasConstraintName("FK__ActWasteR__Offer__31EC6D26");
         });
 
-       
+
+        base.OnModelCreating(modelBuilder);
+
+        modelBuilder.Entity<FavoriteOffers>(entity =>
+        {
+            entity.ToTable("FavoriteOffers");
+
+            // Primary key
+            entity.HasKey(fo => fo.OfferCode);
+
+            // Properties
+            entity.Property(fo => fo.OfferCode).IsRequired();
+            entity.Property(fo => fo.OfferType).HasMaxLength(255).IsRequired();
+            entity.Property(fo => fo.StartDate).HasColumnType("date");
+            entity.Property(fo => fo.EndDate).HasColumnType("date");
+            entity.Property(fo => fo.Description).HasColumnType("ntext");
+            entity.Property(fo => fo.Status).HasMaxLength(40);
+            entity.Property(fo => fo.Rating).HasMaxLength(40);
+            entity.Property(fo => fo.FactoryCode);
+            entity.Property(fo => fo.WasteCode);
+            entity.Property(fo => fo.FactoryAddress).HasMaxLength(255);
+            entity.Property(fo => fo.Quantity).HasMaxLength(25);
+            entity.Property(fo => fo.ContractorRecommend);
+
+
+        });
 
         modelBuilder.Entity<Contractor>(entity =>
         {
@@ -191,7 +218,7 @@ public partial class SwitchContext : DbContext
 
             entity.Property(e => e.OfferCode).ValueGeneratedNever();
             entity.Property(e => e.Description).HasColumnType("ntext");
-           
+
             entity.Property(e => e.EndDate).HasColumnType("datetime");
             //entity.Property(e => e.OfferName).HasMaxLength(40);
             entity.Property(e => e.OfferType).HasMaxLength(40);
@@ -211,9 +238,9 @@ public partial class SwitchContext : DbContext
                 .HasConstraintName("FK__Offer__WasteCode__2D27B809");
         });
 
-        
 
-       
+
+
 
         modelBuilder.Entity<Waste>(entity =>
         {
@@ -231,7 +258,7 @@ public partial class SwitchContext : DbContext
                 .HasConstraintName("FK__Waste__FactoryCo__29572725");
         });
 
-       
+
 
         OnModelCreatingPartial(modelBuilder);
     }

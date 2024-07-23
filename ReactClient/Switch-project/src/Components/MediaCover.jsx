@@ -8,7 +8,7 @@ export default function MediaCover() {
   const factoryName = localStorage.getItem("factoryName");
   const enterClick = () => {
     if (factoryName) {
-      navigate('/OffersPage', { state: {} });
+      navigate('/OffersPage', { state: {} }); //אם נרצה להעביר אובייקט
     } else {
       navigate('/SignInPage', { state: {} });
     }

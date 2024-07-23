@@ -30,6 +30,8 @@ public partial class Factory
     public virtual ICollection<Offer> OfferCodes { get; set; } = new List<Offer>();
 
     public virtual ICollection<Offer> OfferCodesNavigation { get; set; } = new List<Offer>();
+    public ICollection<FavoriteOffers> FavoriteOffers { get; set; }
 
-    
+
+
 }

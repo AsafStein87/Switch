@@ -1,0 +1,16 @@
+.messages-page-container {
+    padding: 20px;
+  }
+  
+  .messages-list {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .message-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  

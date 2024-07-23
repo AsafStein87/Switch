@@ -1,0 +1,58 @@
+/* ShowOffers.css */
+
+.offer-container {
+    padding: 20px;
+  }
+  
+  .offer-title {
+    color: green;
+    text-align: center;
+    padding: 30px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+
+  }
+  
+  .card {
+    width: 100%;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card-media {
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .card-content {
+    padding: 16px;
+  }
+  
+  .card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+  }
+
+
+
+  .favorites-container {
+    padding: 20px;
+  }
+  
+  .favorites-title {
+    text-align: center;
+    padding-top: 50px;
+    color: #378143;;
+  }
+  

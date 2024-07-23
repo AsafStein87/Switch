@@ -3,12 +3,12 @@ import "../../src/StyleSheets/Loader.css"
 
 export default function Loader() {
   return (
-    <figure class="loader">
-    <div class="dot white"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
-    <div class="dot"></div>
+    <figure className="loader">
+    <div className="dot white"></div>
+    <div className="dot"></div>
+    <div className="dot"></div>
+    <div className="dot"></div>
+    <div className="dot"></div>
 </figure>
   )
 }

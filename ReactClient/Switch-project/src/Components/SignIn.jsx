@@ -1,23 +1,45 @@
-import React, { useState } from 'react';
-import { Box, TextField, IconButton, InputAdornment, OutlinedInput, InputLabel, FormControl } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Box, TextField, IconButton, InputAdornment, OutlinedInput, InputLabel, FormControl, Typography, Checkbox, FormControlLabel } from '@mui/material';
+import { Link } from 'react-router-dom';
 import Loader from './Loader';
 import Btn from '../Elements/Btn';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { auth } from './Firebase'; // Import Firebase authentication
 
 export default function SignIn() {
     const [FactoryCodeSI, setFactoryCodeSI] = useState('');
     const [passwordSI, setPasswordSI] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const navigate = useNavigate();
+    const [error, setError] = useState('');
+    const [rememberMe, setRememberMe] = useState(false);
+
+    useEffect(() => {
+        const savedFactoryCode = localStorage.getItem('factoryCode');
+        const savedPassword = localStorage.getItem('password');
+        if (savedFactoryCode && savedPassword) {
+            setFactoryCodeSI(savedFactoryCode);
+            setPasswordSI(savedPassword);
+            setRememberMe(true);
+        }
+    }, []);
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
     const handleMouseDownPassword = (event) => event.preventDefault();
 
-    function SignInFunc() {
-        setLoading(true);
+    const signInAnonymouslyWithFirebase = async () => {
+        try {
+            const userCredential = await signInAnonymously(auth);
+            return userCredential.user;
+        } catch (error) {
+            setLoading(false);
+            setError(error.message);
+            throw error;
+        }
+    };
+
+    const callAPISignIn = async () => {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -33,15 +55,39 @@ export default function SignIn() {
             redirect: "follow"
         };
 
-        fetch("http://localhost:5116/api/Factory/SignIn", requestOptions)
-            .then((response) => response.text())
-            .then((result) => {
-                localStorage.setItem("factoryName", result);
-                setLoading(false);
-                window.location = window.location.hostname + "/#/AfterSignInPage";
-            })
-            .catch((error) => setLoading(false));
-    }
+        const response = await fetch("http://localhost:5116/api/Factory/SignIn", requestOptions);
+        setLoading(false);
+
+        if (!response.ok) {
+            throw new Error('Incorrect factory code or password');
+        }
+
+        const result = await response.text();
+        localStorage.setItem('FactoryCode', FactoryCodeSI);
+        if (rememberMe) {
+            localStorage.setItem('factoryCode', FactoryCodeSI);
+            localStorage.setItem('password', passwordSI);
+        } else {
+            localStorage.removeItem('factoryCode');
+            localStorage.removeItem('password');
+        }
+        localStorage.setItem("factoryName", result);
+        window.location = "/#/AfterSignInPage";
+    };
+
+    const SignInFunc = async () => {
+        setLoading(true);
+        setError('');
+
+        try {
+            // Step 1: Sign in with your API (SQL authentication)
+            await callAPISignIn();
+            // Step 2: If SQL sign-in is successful, sign in anonymously with Firebase
+            await signInAnonymouslyWithFirebase();
+        } catch (error) {
+            // Error handling is already managed in each function
+        }
+    };
 
     return (
         <>
@@ -71,6 +117,7 @@ export default function SignIn() {
                 <TextField 
                     label="ח.פ" 
                     onChange={(e) => setFactoryCodeSI(e.target.value)} 
+                    value={FactoryCodeSI}
                     sx={{ width: '220px', marginBottom: '10px' }} 
                 />
                 <FormControl sx={{ width: '220px', marginBottom: '10px' }} variant="outlined">
@@ -95,6 +142,13 @@ export default function SignIn() {
                         label="Password"
                     />
                 </FormControl>
+                <FormControlLabel
+                    control={<Checkbox checked={rememberMe} onChange={(e) => setRememberMe(e.target.checked)} />}
+                    label="זכור אותי"
+                    labelPlacement="start"
+                    sx={{ marginBottom: '10px' }}
+                />
+                {error && <Typography color="error" sx={{ marginBottom: '10px' }}>{error}</Typography>}
                 <Btn onClick={SignInFunc}>התחברות</Btn>
                 <br />
                 <h3>?'עוד לא נרשמת לסוויצ</h3>

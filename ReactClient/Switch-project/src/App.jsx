@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -19,13 +19,23 @@ import AfterSignInPage from './Pages/AfterSignInPage'
 import { WhoWeArePage } from './Pages/WhoWeArePage'
 import PicCover from './Components/PicCover'
 import { ActivitiesPage } from './Pages/ActivitiesPage'
+import FavoritesPage from './Pages/FavoritesPage';
+
 
 
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [factoryName, setFactoryName] = useState("");
 
+  useEffect(() => {
+    const userSignedIn = localStorage.getItem('isSignedIn') === 'true';
+    setIsSignedIn(userSignedIn);
+    if (userSignedIn) {
+      setFactoryName(localStorage.getItem('factoryName')); // Assuming you store the factory name in localStorage
+    }
+  }, []);
   return (
     <>
     <Router>
@@ -38,6 +48,7 @@ function App() {
         <Route path="/NewOfferPage" element={<NewOfferPage/>}/>       
         <Route path="/WhoWeArePage" element={<WhoWeArePage/>}/>        
         <Route path="/ActivitiesPage" element={<ActivitiesPage/>}/>        
+        <Route path="/FavoritesPage" element={<FavoritesPage/>}/>        
  
         </Route>  
         <Route path="/OffersPage" element={<OffersPage/>}/>      

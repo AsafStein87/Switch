@@ -94,3 +94,4 @@ C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\WebApplication
 C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\WebApplication\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Abstractions.dll
 C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\WebApplication\bin\Debug\net6.0\Microsoft.Extensions.FileProviders.Physical.dll
 C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\WebApplication\bin\Debug\net6.0\Microsoft.Extensions.FileSystemGlobbing.dll
+C:\Users\bathe\Desktop\שנה ג\פרויקט גמר\ClassLibrary\WebApplication\bin\Debug\net6.0\System.Net.WebSockets.WebSocketProtocol.dll

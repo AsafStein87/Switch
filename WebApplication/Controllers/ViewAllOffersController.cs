@@ -57,7 +57,8 @@ namespace WebApplication.Controllers
                             StartDate = o.StartDate,
                             EndDate = o.EndDate,
                             Description = o.Description,
-                            ContractorRecommend = o.ContractorRecommend
+                            ContractorRecommend = o.ContractorRecommend,
+                            OfferCode = o.OfferCode
                         };
                         offerLst.Add(offerw);
                     }
