@@ -47,7 +47,6 @@ namespace WebApplication.Controllers
                     var filteredOffers = offersQuery.ToList();
                     foreach (Offer o in filteredOffers)
                     {
-                        OfferCode = o.OfferCode;
 
                         OfferWasteDTO offerw = new OfferWasteDTO
                         {
@@ -58,8 +57,12 @@ namespace WebApplication.Controllers
                             EndDate = o.EndDate,
                             Description = o.Description,
                             ContractorRecommend = o.ContractorRecommend,
-                            OfferCode = o.OfferCode
+                            OfferCode = o.OfferCode,
+                            FactoryCode = o.FactoryCode
+
+
                         };
+
                         offerLst.Add(offerw);
                     }
                 }
@@ -70,6 +73,18 @@ namespace WebApplication.Controllers
             }
             return offerLst;
         }
+        [HttpGet]
+        [Route("GetFactoryName")]
+        public ActionResult<string> GetFactoryName(int factoryCode)
+        {
+            var factory = db.Factories.FirstOrDefault(f => f.FactoryCode == factoryCode);
+            if (factory == null)
+            {
+                return NotFound();
+            }
+            return factory.FactoryName;
+        }
+
 
     }
 }

@@ -5,6 +5,9 @@
 
         public int OfferCode { get; set; }
 
+        public int? FactoryCode { get; set; }
+
+
         public string OfferType { get; set; }
       
         public string Quantity { get; set; }

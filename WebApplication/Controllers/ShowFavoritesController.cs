@@ -12,40 +12,39 @@ namespace WebApplication.Controllers
     public class ShowFavoritesController : ControllerBase
     {
         SwitchContext db = new SwitchContext();
-        //[HttpGet]
-        //[Route("GetFavorites")]
-        //public ActionResult<List<OfferWasteDTO>> GetFavoriteOffers([FromQuery] int factoryCode)
-        //{
-        //    try
-        //    {
-        //        var favoriteOffers = db.FavoriteOffers
-        //            .Include(f => f.Offer)
-        //            .Include(f => f.Factory)
-        //            .Where(f => f.FactoryCode == factoryCode)
-        //            .Select(f => new OfferWasteDTO
-        //            {
-        //                OfferType = f.Offer.OfferType,
-        //                Quantity = f.Offer.Quantity,
-        //                FactoryAddress = f.Offer.FactoryAddress,
-        //                StartDate = f.Offer.StartDate,
-        //                EndDate = f.Offer.EndDate,
-        //                Description = f.Offer.Description,
-        //                ContractorRecommend = f.Offer.ContractorRecommend
-        //            })
-        //            .ToList();
+        [HttpGet]
+        [Route("GetFavorites")]
+        public async Task<ActionResult<List<OfferWasteDTO>>> GetFavoriteOffers([FromQuery] int userId)
+        {
+            try
+            {
+                var favoriteOffers = await db.FavoriteOffers
+                    .Include(f => f.Offer)
+                    .Where(f => f.FactoryCode == userId) // Assuming FavoriteOffers has a UserId
+                    .Select(f => new OfferWasteDTO
+                    {
+                        OfferType = f.Offer.OfferType,
+                        Quantity = f.Offer.Quantity,
+                        FactoryAddress = f.Offer.FactoryAddress,
+                        StartDate = f.Offer.StartDate,
+                        EndDate = f.Offer.EndDate,
+                        Description = f.Offer.Description,
+                        ContractorRecommend = f.Offer.ContractorRecommend
+                    })
+                    .ToListAsync();
 
-        //        if (favoriteOffers == null)
-        //        {
-        //            return NotFound("No favorite offers found.");
-        //        }
+                if (favoriteOffers == null || !favoriteOffers.Any())
+                {
+                    return NotFound("No favorite offers found.");
+                }
 
-        //        return Ok(favoriteOffers);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        return StatusCode(500, $"Internal server error: {e.Message}");
-        //    }
-        //}
+                return Ok(favoriteOffers);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internal server error: {e.Message}");
+            }
+        }
 
         [HttpDelete]
         [Route("DeleteFavorite")]
@@ -79,11 +78,11 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [Route("AddToFavorite")]
-        public async Task<IActionResult> AddToFavorite([FromBody] int OfferCodeIn)
+        public async Task<IActionResult> AddToFavorite([FromBody] FavoriteOfferRequestDTO request)
         {
             try
             {
-                var offer = await db.Offers.FirstOrDefaultAsync(x => x.OfferCode == OfferCodeIn);
+                var offer = await db.Offers.FirstOrDefaultAsync(x => x.OfferCode == request.OfferCode);
                 if (offer == null)
                 {
                     return NotFound("Offer not found.");
@@ -106,13 +105,44 @@ namespace WebApplication.Controllers
                 };
 
                 db.FavoriteOffers.Add(favoriteOffer);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
 
                 return Ok(new { message = "Offer added to favorites successfully.", favoriteOffer });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error adding offer to favorites: {ex.Message}");
+            }
+        }
+
+
+        [HttpGet]
+        [Route("GetFavoriteOffers")]
+        public async Task<ActionResult<List<Offer>>> GetFavoriteOffers([FromQuery] string offerIds)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(offerIds))
+                {
+                    return BadRequest("No offer IDs provided.");
+                }
+
+                var offerIdList = offerIds.Split(',').Select(int.Parse).ToList();
+
+                var offers = await db.Offers
+                    .Where(o => offerIdList.Contains(o.OfferCode))
+                    .ToListAsync();
+
+                if (offers == null || !offers.Any())
+                {
+                    return NotFound("No offers found for the provided IDs.");
+                }
+
+                return Ok(offers);
+            }
+            catch (Exception e)
+            {
+                return StatusCode(500, $"Internal server error: {e.Message}");
             }
         }
 

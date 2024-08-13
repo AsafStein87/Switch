@@ -37,6 +37,7 @@ namespace ClassLibrary.Models
 
        
         public string ContractorRecommend { get; set; }
+        public Offer Offer { get; set; } // Navigation property to Offer
 
 
         //public Offer Offer { get; set; }

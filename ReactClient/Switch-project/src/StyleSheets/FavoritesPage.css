@@ -1,0 +1,44 @@
+.favorites-container {
+    padding: 20px;
+   
+    font-family: inherit;
+
+  }
+  
+  .favorites-title {
+    color: #378143;
+    text-align: center;
+    padding: 30px;
+  }
+  
+  .card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .card {
+    width: 300px;
+    margin: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card-media {
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .card-actions {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .MuiButton-root {
+    background-color: #e62222; /* Red color */
+    color: white;
+    &:hover {
+      background-color: #c41b1b; /* Darker red for hover effect */
+    }
+  }
+  

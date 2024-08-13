@@ -5,9 +5,11 @@
   }
   
   .offer-title {
-    color: green;
+    color: #378143;
     text-align: center;
     padding: 30px;
+    font-family: inherit;
+
   }
   
   .card-container {

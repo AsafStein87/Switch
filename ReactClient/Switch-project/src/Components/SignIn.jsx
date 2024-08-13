@@ -6,6 +6,8 @@ import Btn from '../Elements/Btn';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { auth } from './Firebase'; // Import Firebase authentication
+import { useNavigate } from 'react-router-dom';
+
 
 export default function SignIn() {
     const [FactoryCodeSI, setFactoryCodeSI] = useState('');
@@ -14,15 +16,15 @@ export default function SignIn() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
+        
         const savedFactoryCode = localStorage.getItem('factoryCode');
         const savedPassword = localStorage.getItem('password');
-        if (savedFactoryCode && savedPassword) {
-            setFactoryCodeSI(savedFactoryCode);
-            setPasswordSI(savedPassword);
-            setRememberMe(true);
-        }
+        if(savedFactoryCode && savedPassword)
+            callAPISignIn(savedFactoryCode , savedPassword);
     }, []);
 
     const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -39,13 +41,13 @@ export default function SignIn() {
         }
     };
 
-    const callAPISignIn = async () => {
+    const callAPISignIn = async (savedFactoryCode , savedPassword) => {
         const myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
         const raw = JSON.stringify({
-            "FactoryCode": FactoryCodeSI,
-            "Password": passwordSI
+            "FactoryCode": savedFactoryCode,
+            "Password": savedPassword
         });
 
         const requestOptions = {
@@ -63,25 +65,28 @@ export default function SignIn() {
         }
 
         const result = await response.text();
-        localStorage.setItem('FactoryCode', FactoryCodeSI);
         if (rememberMe) {
             localStorage.setItem('factoryCode', FactoryCodeSI);
             localStorage.setItem('password', passwordSI);
+           
+
         } else {
             localStorage.removeItem('factoryCode');
             localStorage.removeItem('password');
         }
-        localStorage.setItem("factoryName", result);
-        window.location = "/#/AfterSignInPage";
+         localStorage.setItem("factoryName", result);
+        sessionStorage.setItem("reload", false);
+        navigate('/AfterSignInPage');
     };
 
-    const SignInFunc = async () => {
+    const SignInFunc = async () => {    
+        console.log("****");    
         setLoading(true);
         setError('');
 
         try {
             // Step 1: Sign in with your API (SQL authentication)
-            await callAPISignIn();
+            await callAPISignIn(FactoryCodeSI , passwordSI);
             // Step 2: If SQL sign-in is successful, sign in anonymously with Firebase
             await signInAnonymouslyWithFirebase();
         } catch (error) {
@@ -149,7 +154,8 @@ export default function SignIn() {
                     sx={{ marginBottom: '10px' }}
                 />
                 {error && <Typography color="error" sx={{ marginBottom: '10px' }}>{error}</Typography>}
-                <Btn onClick={SignInFunc}>התחברות</Btn>
+                <Btn onClick={()=>
+                    {SignInFunc()}}>התחברות</Btn>
                 <br />
                 <h3>?'עוד לא נרשמת לסוויצ</h3>
                 <Link to="/RegisterPage">

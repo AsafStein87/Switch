@@ -5,11 +5,13 @@ import '../StyleSheets/Navbar.css';
 const Navbar = (props) => {
     const { factoryName } = props;
     const navigate = useNavigate();
-
     const handleSignOut = () => {
+
         localStorage.removeItem('factoryName');
         localStorage.removeItem('factoryCode');
         localStorage.removeItem('password');
+        sessionStorage.setItem("reload", false);
+
         navigate('/SignInPage');
         window.location.reload();
     };
@@ -31,7 +33,7 @@ const Navbar = (props) => {
                 
 
                 
-                {!factoryName && (
+                {!factoryName  && (
                     <>
                         <Link to="/RegisterPage" className="navbar-link">
                             הרשמה
@@ -46,10 +48,21 @@ const Navbar = (props) => {
                     <Link to="/FavoritesPage" className="navbar-link">
                 מועדפים               
                 </Link>
-                        <div className="navbar-greeting">
-                            <img src='/Images/person outline.png' alt="Profile Icon" className="profile-icon" />
-                            <p>שלום {factoryName}</p>
-                        </div>
+                <Link to="/NewOfferPage" className="navbar-link">
+                לפנות פסולת               
+                </Link>
+                <Link to="/OffersPage" className="navbar-link">
+                לקניית פסולת               
+                </Link>
+                <Link to="/MapComponent" className="navbar-link">
+                מפה                
+                </Link>
+
+                <div className="navbar-greeting">
+    <img src='/Images/person outline.png' alt="Profile Icon" className="profile-icon" />
+    <p>שלום {factoryName}</p>
+</div>
+
                         <button className="Btn1" onClick={handleSignOut}>
                             <div className="sign">
                                 <svg viewBox="0 0 512 512">

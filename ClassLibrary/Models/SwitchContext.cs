@@ -80,10 +80,11 @@ public partial class SwitchContext : DbContext
         {
             entity.ToTable("FavoriteOffers");
 
-            // Primary key
-            entity.HasKey(fo => fo.OfferCode);
+            // Composite primary key (if applicable)
+            entity.HasKey(fo => new { fo.FactoryCode, fo.OfferCode });
 
             // Properties
+           
             entity.Property(fo => fo.OfferCode).IsRequired();
             entity.Property(fo => fo.OfferType).HasMaxLength(255).IsRequired();
             entity.Property(fo => fo.StartDate).HasColumnType("date");
@@ -96,6 +97,13 @@ public partial class SwitchContext : DbContext
             entity.Property(fo => fo.FactoryAddress).HasMaxLength(255);
             entity.Property(fo => fo.Quantity).HasMaxLength(25);
             entity.Property(fo => fo.ContractorRecommend);
+
+            // Relationships
+            entity.HasOne(fo => fo.Offer)
+                  .WithMany() // Assuming one Offer can be in many FavoriteOffers
+                  .HasForeignKey(fo => fo.OfferCode)
+                  .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete if needed
+
 
 
         });
