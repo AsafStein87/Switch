@@ -1,0 +1,59 @@
+.inbox-container {
+    width: 800px;
+    margin: 0 auto;
+    padding: 100px;
+    font-size: 20px;
+    
+      }
+
+
+
+      .header {
+        font-size: 40px;
+        color: #378143;
+      }
+  
+  .messages-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .message-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    transition: box-shadow 0.3s ease;
+    background-image: url('/images/mail1.jpg'); /* Use url() to correctly reference the image */
+  background-size: cover; /* Ensures the image covers the entire card */
+  background-position: center; /* Centers the background image */
+  }
+  
+  .message-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  .message-content p {
+    margin: 8px 0;
+  }
+  
+  .message-content strong {
+    color: #FFF;
+  }
+  
+  .message-card p{
+    color: #FFF;
+  }
+  .message-content p:last-child {
+    margin-bottom: 0;
+  }
+
+  .message-content p {
+    direction: rtl;
+  }
+  
+  .message-card .btn {
+    margin-top: 10px;
+  }
+  

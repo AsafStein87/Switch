@@ -23,7 +23,7 @@ namespace WebApplication.Controllers
             try
             {
                 
-               // var factoryUser = db.Factories.FirstOrDefault(x => x.FactoryCode == NewOffer.FactoryCode);
+               //var factoryUser = db.Factories.FirstOrDefault(x => x.FactoryCode == NewOffer.FactoryCode);
 
                 Offer o1 = new Offer();
                 o1.OfferCode = random.Next(1, int.MaxValue);
@@ -57,8 +57,9 @@ namespace WebApplication.Controllers
             }
             catch (Exception e)
             {
-                return BadRequest(e.Message);
+                return BadRequest(new { message = "Error processing request", details = e.Message });
             }
+
         }
         [HttpGet]
         [Route("GetFactoryAddress")]

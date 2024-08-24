@@ -43,3 +43,7 @@
   color: #888;
 }
 
+
+video {
+  pointer-events: none; /* Allows scrolling while hovering over the video */
+}

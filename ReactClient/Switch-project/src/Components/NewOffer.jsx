@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Txt from '../Elements/TxtArea';
 import Btn from '../Elements/Btn';
 import { Box, TextField, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
@@ -7,12 +8,15 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from 'dayjs';
+import ShowOffers from './ShowOffers';
 
 export default function NewOffer() {
+  const location = useLocation();
+  const { factoryName } = location.state || {}; // Retrieve factoryName from state
+
   const [OfferType, setOfferType] = useState('');
   const [factoryAddress, setFactoryAddress] = useState('');
   const [factoryCode, setFactoryCode] = useState('');
-  const [factoryName, setFactoryName] = useState('');
   const [StartDate, setStartDate] = useState(dayjs());
   const [EndDate, setEndDate] = useState(dayjs());
   const [Quantity, setQuantity] = useState('');
@@ -22,30 +26,25 @@ export default function NewOffer() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const storedFactoryCode = localStorage.getItem("factoryCode");
-    if (storedFactoryCode) {
-      setFactoryCode(storedFactoryCode);
-      console.log("factoryCode retrieved from local storage:", storedFactoryCode);
-    }
-
-    const storedFactoryName = localStorage.getItem("factoryName");
-    if (storedFactoryName) {
-      setFactoryName(storedFactoryName);
-      console.log("factoryName retrieved from local storage:", storedFactoryName);
-    }
-
-    const storedFactoryAddress = localStorage.getItem("factoryAddress");
+      const storedFactoryAddress = localStorage.getItem("factoryAddress");
     if (storedFactoryAddress) {
       setFactoryAddress(storedFactoryAddress);
       console.log("factoryAddress retrieved from local storage:", storedFactoryAddress);
     }
-}, []);
+    
+    const storedFactoryCode = localStorage.getItem("FactoryCode");
+    if (storedFactoryCode) {
+      setFactoryCode(storedFactoryCode);
+      console.log("factoryCode retrieved from local storage:", storedFactoryCode);
+    }
+  }, []);
 
   useEffect(() => {
     console.log("factoryCode", factoryCode);
     console.log("factoryAddress", factoryAddress);
-    console.log("factoryName", factoryName);
-  }, [factoryCode, factoryAddress]);
+    console.log("factoryName", factoryName); // This is passed from the Navbar through Link state
+  }, [factoryCode, factoryAddress, factoryName]);
+
 
   const AddOffer = () => {
     if (!OfferType || !ContractorRecommend || !StartDate || !EndDate || !Quantity) {
@@ -54,11 +53,13 @@ export default function NewOffer() {
     }
 
     setError(false);
+    console.log("factoryCode before sending the offer:", factoryCode); // Debugging
+
     const myHeaders = new Headers();
     myHeaders.append('Content-Type', 'application/json');
 
-    const offerData = {
-      factoryCode,
+    const offerData = {    
+      factoryCode,  
       OfferType,
       factoryAddress,
       StartDate: StartDate.format('YYYY-MM-DD'),
@@ -66,7 +67,11 @@ export default function NewOffer() {
       Quantity,
       Description,
       ContractorRecommend,
-    };
+      factoryName, // Including factoryName in the data sent to the server
+      };
+
+    console.log('factoryCode:', factoryCode);
+console.log('Offer Data:', offerData);
 
     console.log('Offer Data:', offerData);
 
@@ -80,7 +85,9 @@ export default function NewOffer() {
     fetch('http://localhost:5116/api/AddNewOffer/AddOffer', requestOptions)
       .then((response) => {
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          return response.text().then(text => {
+            throw new Error(`HTTP error! status: ${response.status}, message: ${text}`);
+          });
         }
         return response.text();
       })
@@ -88,8 +95,15 @@ export default function NewOffer() {
         console.log(result);
         setPopupOpen(true);
       })
-      .catch((error) => console.error('Error:', error));
+      .catch((error) => console.error('Error:', error.message));
   };
+
+  const handleClose = () => {
+    setPopupOpen(false); // Close the dialog first
+    // Redirect to a different route after closing the dialog
+    navigate('/ShowOffers'); // Replace '/target-route' with your desired path
+  };
+
 
   return (
     <>
@@ -148,7 +162,7 @@ export default function NewOffer() {
         </Box>
       </div>
 
-      <Dialog open={popupOpen} onClose={() => setPopupOpen(false)}>
+      <Dialog open={popupOpen} onClose={() => handleClose() }>
         <DialogTitle sx={{ direction: 'rtl' }}>הצעה נוספה בהצלחה</DialogTitle>
         <DialogContent sx={{ direction: 'rtl' }}>
           <DialogContentText sx={{ direction: 'rtl' }}>
@@ -156,7 +170,7 @@ export default function NewOffer() {
           </DialogContentText>
         </DialogContent>
         <DialogActions sx={{ direction: 'rtl' }}>
-          <Button onClick={() => setPopupOpen(false)}>סגור</Button>
+          <Button onClick={() => handleClose()}>סגור</Button>
         </DialogActions>
       </Dialog>
     </>

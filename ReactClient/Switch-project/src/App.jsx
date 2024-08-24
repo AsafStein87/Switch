@@ -22,6 +22,7 @@ import FavoritesPage from './Pages/FavoritesPage';
 import 'leaflet/dist/leaflet.css';
 import MapComponent from './Components/MapComponent'; // Adjust the path as needed
 import GoogleMapCom from './Components/GoogleMapCom'
+import Inbox from './Components/Inbox'
 
 
 
@@ -54,6 +55,7 @@ function App() {
         <Route path="/ActivitiesPage" element={<ActivitiesPage/>}/>        
         <Route path="/FavoritesPage" element={<FavoritesPage/>}/> 
         <Route path="/MapComponent" element={<GoogleMapCom />} />
+        <Route path="/Inbox" element={<Inbox/>} />
        
  
         </Route>  

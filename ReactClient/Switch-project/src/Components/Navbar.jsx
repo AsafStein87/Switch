@@ -48,7 +48,7 @@ const Navbar = (props) => {
                     <Link to="/FavoritesPage" className="navbar-link">
                 מועדפים               
                 </Link>
-                <Link to="/NewOfferPage" className="navbar-link">
+                <Link to="/NewOfferPage" className="navbar-link" state={{ factoryName }} > 
                 לפנות פסולת               
                 </Link>
                 <Link to="/OffersPage" className="navbar-link">
@@ -56,6 +56,9 @@ const Navbar = (props) => {
                 </Link>
                 <Link to="/MapComponent" className="navbar-link">
                 מפה                
+                </Link>
+                <Link to="/Inbox" className="navbar-link">
+                דואר נכנס                
                 </Link>
 
                 <div className="navbar-greeting">

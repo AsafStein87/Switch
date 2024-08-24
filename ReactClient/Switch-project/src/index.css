@@ -71,3 +71,7 @@ button:focus-visible {
   }
 }
 
+
+video {
+  pointer-events: none; /* Allows scrolling while hovering over the video */
+}

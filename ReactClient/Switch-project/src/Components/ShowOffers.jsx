@@ -83,6 +83,7 @@ export default function ShowOffers() {
   const [loading, setLoading] = useState(false);
   const [chatOfferId, setChatOfferId] = useState(null);
   const [factoryAddress, setChatFactoryAddress] = useState(null);
+  const [factoryCode, setFactoryCode] = useState(null);
   const [wasteTypeFilter, setWasteTypeFilter] = useState('');
   const [amountFilter, setAmountFilter] = useState('');
   const [locationFilter, setLocationFilter] = useState('');
@@ -91,8 +92,7 @@ export default function ShowOffers() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [dialogMessage, setDialogMessage] = useState('');
   const [factoryNames, setFactoryNames] = useState({});
-
-
+  const [factoryCodeToName, setFacetoryToNameAndNumber] = useState(new Map());
 
   const getAllOffers = async () => {
     setLoading(true);
@@ -122,6 +122,7 @@ export default function ShowOffers() {
     }
   };
   
+  
 
   const fetchFactoryName = async (factoryCode) => {
     if (!factoryCode) {
@@ -135,10 +136,14 @@ export default function ShowOffers() {
       if (response.ok) {
         const factoryName = await response.text();
         console.log(`Factory Code: ${factoryCode}, Factory Name: ${factoryName}`); // Log the response
+
         setFactoryNames(prevNames => ({
           ...prevNames,
           [factoryCode]: factoryName
         }));
+
+        setFacetoryToNameAndNumber((prevMap) => new Map(prevMap).set(factoryName, factoryCode));
+
       } else {
         console.error(`Failed to fetch factory name for code: ${factoryCode}`);
       }
@@ -146,6 +151,7 @@ export default function ShowOffers() {
       console.error(`Error fetching factory name for code: ${factoryCode}`, error);
     }
   };
+  
   
 
   const loadFavorites = () => {
@@ -166,7 +172,10 @@ export default function ShowOffers() {
     loadFavorites();
   }, []);
 
-
+  useEffect(() => {
+    console.log('Factory Names:', factoryNames);
+  }, [factoryNames]);
+  
 
   const handleFilter = () => {
     const filtered = offers.filter(offer => {
@@ -208,15 +217,19 @@ export default function ShowOffers() {
     }
   };
   
+  
 
-  const openChat = (offerId, factoryAddress) => {
+  const openChat = (offerId, factoryAddress, factoryCode) => {
     setChatOfferId(offerId);
     setChatFactoryAddress(factoryAddress);
+    setFactoryCode(factoryCode);
   };
 
   const closeChat = () => {
     setChatOfferId(null);
     setChatFactoryAddress(null);
+    setFactoryCode(null);
+
   };
 
   const getRandomImage = (wasteType) => {
@@ -293,9 +306,10 @@ export default function ShowOffers() {
               alt="Offer Image"
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="div">
-                {factoryNames[offer.factoryCode] || 'מפעל'}
-                 </Typography>
+            <Typography gutterBottom variant="h5" component="div">
+  {factoryNames[offer.factoryCode] || 'מפעל'}
+</Typography>
+
               <Typography variant="body2" color="text.secondary">
                 סוג הצעה: {wasteTypeMap[offer.offerType] || offer.offerType}<br />
                 כמות: {offer.quantity}<br />
@@ -308,13 +322,13 @@ export default function ShowOffers() {
             </CardContent>
             <CardActions className="card-actions">
               <Btn size="small" onClick={() => addToFavorites(offer)}>הוספה למועדפים</Btn>
-              <Btn size="small" onClick={() => openChat(offer.offerCode, offer.factoryAddress)}>שלח הודעה</Btn>
+              <Btn size="small" onClick={() => openChat(offer.offerCode, offer.factoryAddress, offer.factoryCode)}>שלח הודעה</Btn>
             </CardActions>
           </Card>
         ))}
       </div>
       {chatOfferId !== null && (
-        <Chat offerId={chatOfferId} factoryAddress={factoryAddress} closeChat={closeChat} />
+        <Chat offerId={chatOfferId} factoryCodeGiven={factoryCode} closeChat={closeChat} offerSender={true} from={0} />
       )}
         <Dialog open={dialogOpen} onClose={handleDialogClose}>
         <DialogTitle sx={{ direction: 'rtl' }}>הודעה</DialogTitle>

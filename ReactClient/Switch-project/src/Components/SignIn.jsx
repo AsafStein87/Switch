@@ -65,13 +65,11 @@ export default function SignIn() {
         }
 
         const result = await response.text();
+        localStorage.setItem('FactoryCode', FactoryCodeSI);
         if (rememberMe) {
-            localStorage.setItem('factoryCode', FactoryCodeSI);
             localStorage.setItem('password', passwordSI);
-           
-
         } else {
-            localStorage.removeItem('factoryCode');
+            // localStorage.removeItem('factoryCode');
             localStorage.removeItem('password');
         }
          localStorage.setItem("factoryName", result);
