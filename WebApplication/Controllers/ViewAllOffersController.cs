@@ -86,6 +86,37 @@ namespace WebApplication.Controllers
         }
 
 
+        [HttpDelete("DeleteOffer")]//זה מה שאמרנו בהודעת וואסטאפ בקבוצה
+        public IActionResult DeleteOffer(int offerId, string userFactoryName)
+        {
+            // Find the offer by offerId
+            var offer = db.Offers.FirstOrDefault(o => o.OfferCode == offerId);
+
+            if (offer == null)
+            {
+                return NotFound();
+            }
+
+            // Retrieve the factory name associated with the offer
+            var offerFactoryName = db.Factories
+                                    .Where(f => f.FactoryCode == offer.FactoryCode)
+                                    .Select(f => f.FactoryName)
+                                    .FirstOrDefault();
+
+            // Check if the current user's factoryName matches the factoryName of the offer
+            if (offerFactoryName != userFactoryName)
+            {
+                return Forbid("You are not authorized to delete this offer.");
+            }
+
+            // Remove the offer if the user is authorized
+            db.Offers.Remove(offer);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+
     }
 }
 
