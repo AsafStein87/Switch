@@ -54,9 +54,7 @@ const Navbar = (props) => {
                 <Link to="/OffersPage" className="navbar-link">
                 לקניית פסולת               
                 </Link>
-                <Link to="/MapComponent" className="navbar-link">
-                מפה                
-                </Link>
+                
                 <Link to="/Inbox" className="navbar-link">
                 דואר נכנס                
                 </Link>

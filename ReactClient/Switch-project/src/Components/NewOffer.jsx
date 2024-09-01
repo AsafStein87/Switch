@@ -82,7 +82,7 @@ console.log('Offer Data:', offerData);
       redirect: 'follow'
     };
 
-    fetch('http://localhost:5116/api/AddNewOffer/AddOffer', requestOptions)
+    fetch('http://proj.ruppin.ac.il/bgroup34/test2/tar1/api/AddNewOffer/AddOffer', requestOptions)
       .then((response) => {
         if (!response.ok) {
           return response.text().then(text => {

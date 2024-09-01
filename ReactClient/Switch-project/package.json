@@ -31,6 +31,8 @@
     "react-rounded-image": "^2.0.15",
     "react-router-dom": "^6.23.1"
   },
+  "homepage": "http://proj.ruppin.ac.il/bgroup34/test2/tar1",
+  
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

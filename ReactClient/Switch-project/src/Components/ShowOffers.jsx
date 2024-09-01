@@ -184,7 +184,7 @@ export default function ShowOffers() {
   const getAllOffers = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5116/api/ViewAllOffers/GetAllOffers");
+      const response = await fetch("http://proj.ruppin.ac.il/bgroup34/test2/tar1/api/ViewAllOffers/GetAllOffers");
       const result = await response.json();
       const filtered = result.filter(offer => dayjs(offer.endDate).isAfter(dayjs()));
       console.log(filtered, result);
@@ -212,7 +212,7 @@ export default function ShowOffers() {
   
   const handleTakeDownOffer = async (offerId, myFactoryName) => {
     try {
-      const response = await fetch(`http://localhost:5116/api/ViewAllOffers/DeleteOffer?offerId=${offerId}&userFactoryName=${myFactoryName}`, {
+      const response = await fetch(`http://proj.ruppin.ac.il/bgroup34/test2/tar1/api/ViewAllOffers/DeleteOffer?offerId=${offerId}&userFactoryName=${myFactoryName}`, {
         method: 'DELETE',
       });
   
@@ -240,7 +240,7 @@ export default function ShowOffers() {
   
     console.log(`Fetching factory name for code: ${factoryCode}`); // Debug log
     try {
-      const response = await fetch(`http://localhost:5116/api/ViewAllOffers/GetFactoryName?factoryCode=${factoryCode}`);
+      const response = await fetch(`http://proj.ruppin.ac.il/bgroup34/test2/tar1/api/ViewAllOffers/GetFactoryName?factoryCode=${factoryCode}`);
       if (response.ok) {
         const factoryName = await response.text();
         console.log(`Factory Code: ${factoryCode}, Factory Name: ${factoryName}`); // Log the response

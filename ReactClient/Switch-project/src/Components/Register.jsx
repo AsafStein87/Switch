@@ -66,7 +66,7 @@ export default function Register() {
             redirect: "follow"
         };
 
-        fetch("http://localhost:5116/api/Factory/Register", requestOptions)
+        fetch("http://proj.ruppin.ac.il/bgroup34/test2/tar1/api/Factory/Register", requestOptions)
             .then((response) => response.text())
             .then((result) => {
                 console.log('FactoryCode saved:', FactoryCode);
