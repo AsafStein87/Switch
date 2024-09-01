@@ -23,7 +23,7 @@ export const ActivitiesPage = () => {
         <>
       <h1 style={{ paddingTop: '40px', color: '#378143' }}>תחומי פעילות</h1>
       <div style={{ position: 'relative', height: '100vh' }}>
-      <PicCover src="/Images/activities.jpg" />
+      <PicCover src="./Images/activities.jpg" />
       
 
         <Box
@@ -57,7 +57,7 @@ export const ActivitiesPage = () => {
           <h1>
             הזבל שלו הוא האוצר שלך
           </h1>
-          <img src='/Images\icons-recycle.png' style={{height:"80px"}}></img>
+          <img src='./Images/icons-recycle.png' style={{height:"80px"}}></img>
         </Box>
       </div>
       </>

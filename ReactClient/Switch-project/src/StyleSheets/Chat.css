@@ -24,6 +24,7 @@
     flex: 1;
     padding: 10px;
     overflow-y: scroll;
+    color:black;
   }
   
   .chat-message {

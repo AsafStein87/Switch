@@ -25,7 +25,7 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
     transition: box-shadow 0.3s ease;
-    background-image: url('/images/mail1.jpg'); /* Use url() to correctly reference the image */
+    background-image: url('../Images/mail1.jpg'); /* Use url() to correctly reference the image */
   background-size: cover; /* Ensures the image covers the entire card */
   background-position: center; /* Centers the background image */
   }

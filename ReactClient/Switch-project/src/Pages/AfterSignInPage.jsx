@@ -24,10 +24,10 @@ export default function AfterSignInPage() {
                 autoPlay
                 loop
                 muted
-                poster="/Images/AfterSI.mp4"
+                poster="./Images/AfterSI.mp4"
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             >
-                <source src="/Images/AfterSI.mp4" type="video/mp4" />
+                <source src="./Images/AfterSI.mp4" type="video/mp4" />
             </video>
             
             <div style={{

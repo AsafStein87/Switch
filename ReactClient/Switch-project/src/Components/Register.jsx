@@ -100,7 +100,7 @@ export default function Register() {
                     textAlign: 'center'
                 }}
             >
-                <img style={{ padding: "30px" }} src="/Images/register.png" alt="Register Icon" />
+                <img style={{ padding: "30px" }} src="./Images/register.png" alt="Register Icon" />
                 <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                     <div style={{ flex: 1, marginRight: '10px', display: 'flex', flexDirection: 'column' }}>
                         <TextField label="E-mail" sx={{ marginBottom: '10px' }} onChange={(e) => setEmail(e.target.value)} 

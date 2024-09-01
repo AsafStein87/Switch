@@ -20,7 +20,7 @@ const Navbar = (props) => {
         <nav className="navbar">
             <div className="navbar-logo">
                 <Link to="/" className="navbar-logo-link">
-                    <img style={{ height: "100px", padding: "20px" }} src="/Images/switchLogo.ico" alt="Logo" />
+                    <img style={{ height: "100px", padding: "20px" }} src="./Images/switchLogo.ico" alt="Logo" />
                 </Link>
             </div>
             <div className="navbar-links">
@@ -60,7 +60,7 @@ const Navbar = (props) => {
                 </Link>
 
                 <div className="navbar-greeting">
-    <img src='/Images/person outline.png' alt="Profile Icon" className="profile-icon" />
+    <img src='./Images/person outline.png' alt="Profile Icon" className="profile-icon" />
     <p>שלום {factoryName}</p>
 </div>
 

@@ -5,45 +5,45 @@ import '../StyleSheets/FavoritesPage.css'; // For custom styling
 
 const wasteTypeImages = {
   'Plastic': [
-    '/Images/wasteTypes/plastic1.jpg',
-    '/Images/wasteTypes/plastic2.jpg',
-    '/Images/wasteTypes/plastic3.jpg',
-    '/Images/wasteTypes/plastic4.jpg',
-    '/Images/wasteTypes/plastic5.jpg',
-    '/Images/wasteTypes/plastic6.jpg',
-    '/Images/wasteTypes/plastic7.jpg',
-    '/Images/wasteTypes/plastic8.jpg',
+    './Images/wasteTypes/plastic1.jpg',
+    './Images/wasteTypes/plastic2.jpg',
+    './Images/wasteTypes/plastic3.jpg',
+    './Images/wasteTypes/plastic4.jpg',
+    './Images/wasteTypes/plastic5.jpg',
+    './Images/wasteTypes/plastic6.jpg',
+    './Images/wasteTypes/plastic7.jpg',
+    './Images/wasteTypes/plastic8.jpg',
   ],
   'Cardboard': [
-    '/Images/wasteTypes/cardboard1.jpg',
-    '/Images/wasteTypes/cardboard2.jpg',
-    '/Images/wasteTypes/cardboard3.jpg',
-    '/Images/wasteTypes/cardboard4.jpg',
-    '/Images/wasteTypes/cardboard5.jpg',
-    '/Images/wasteTypes/cardboard6.jpg',
-    '/Images/wasteTypes/cardboard7.jpg',
+    './Images/wasteTypes/cardboard1.jpg',
+    './Images/wasteTypes/cardboard2.jpg',
+    './Images/wasteTypes/cardboard3.jpg',
+    './Images/wasteTypes/cardboard4.jpg',
+    './Images/wasteTypes/cardboard5.jpg',
+    './Images/wasteTypes/cardboard6.jpg',
+    './Images/wasteTypes/cardboard7.jpg',
   ],
   'Paper': [
-    '/Images/wasteTypes/paper1.jpg',
-    '/Images/wasteTypes/paper2.jpg',
-    '/Images/wasteTypes/paper3.jpg',
-    '/Images/wasteTypes/paper4.jpg',
-    '/Images/wasteTypes/paper5.jpg',
-    '/Images/wasteTypes/paper6.jpg',
-    '/Images/wasteTypes/paper7.jpg',
-    '/Images/wasteTypes/paper8.jpg',
-    '/Images/wasteTypes/paper9.jpg',
-    '/Images/wasteTypes/paper10.jpg',
+    './Images/wasteTypes/paper1.jpg',
+    './Images/wasteTypes/paper2.jpg',
+    './Images/wasteTypes/paper3.jpg',
+    './Images/wasteTypes/paper4.jpg',
+    './Images/wasteTypes/paper5.jpg',
+    './Images/wasteTypes/paper6.jpg',
+    './Images/wasteTypes/paper7.jpg',
+    './Images/wasteTypes/paper8.jpg',
+    './Images/wasteTypes/paper9.jpg',
+    './Images/wasteTypes/paper10.jpg',
   ],
   'Wood': [
-    '/Images/wasteTypes/wood1.jpg',
-    '/Images/wasteTypes/wood2.jpg',
-    '/Images/wasteTypes/wood3.jpg',
-    '/Images/wasteTypes/wood4.jpg',
-    '/Images/wasteTypes/wood5.jpg',
-    '/Images/wasteTypes/wood6.jpg',
-    '/Images/wasteTypes/wood7.jpg',
-    '/Images/wasteTypes/wood8.jpg',
+    './Images/wasteTypes/wood1.jpg',
+    './Images/wasteTypes/wood2.jpg',
+    './Images/wasteTypes/wood3.jpg',
+    './Images/wasteTypes/wood4.jpg',
+    './Images/wasteTypes/wood5.jpg',
+    './Images/wasteTypes/wood6.jpg',
+    './Images/wasteTypes/wood7.jpg',
+    './Images/wasteTypes/wood8.jpg',
   ]
 };
 
@@ -96,7 +96,7 @@ const FavoritesPage = () => {
   const getRandomImage = (wasteType) => {
     const images = wasteTypeImages[wasteType];
     if (!images) {
-      return '/images/wasteTypes/defaultPic.jpg'; // Use a default image if wasteType is not found
+      return './Images/wasteTypes/defaultPic.jpg'; // Use a default image if wasteType is not found
     }
     return images[Math.floor(Math.random() * images.length)];
   };

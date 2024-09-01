@@ -115,7 +115,7 @@ export default function SignIn() {
                 }}
             >
                 {loading && <Loader />}
-                <img style={{ padding: "30px" }} src="/Images/person.png" alt="Register Icon" />
+                <img style={{ padding: "30px" }} src="./Images/person.png" alt="Register Icon" />
 
                 <TextField 
                     label="ח.פ" 

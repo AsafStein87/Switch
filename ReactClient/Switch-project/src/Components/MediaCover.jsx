@@ -30,12 +30,12 @@ export default function MediaCover() {
           autoPlay
           loop
           muted
-          poster="/Images/homeVideo.mp4"
+          poster="./Images/homeVideo.mp4"
           style={{ width: '100%', height: '80%', objectFit: 'cover' , marginBottom: '20px' }}
         >
          
           <source
-            src="/Images/homeVideo.mp4"
+            src="./Images/homeVideo.mp4"
             type="video/mp4"
           />
            

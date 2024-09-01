@@ -22,7 +22,7 @@ export const WhoWeArePage = () => {
         <>
       <h1 style={{ paddingTop: '40px', color: '#378143' }}>מי אנחנו</h1>
       <div style={{ position: 'relative', height: '100vh' }}>
-      <PicCover src="/Images/whoweare.jpg" />
+      <PicCover src="./Images/whoweare.jpg" />
 
         <Box
           sx={{
@@ -54,7 +54,6 @@ export const WhoWeArePage = () => {
           <h1>
             הזבל שלו הוא האוצר שלך
           </h1>
-          <img src='/Images\icons-recycle.png' style={{height:"50px"}}></img>
         </Box>
       </div>
       </>
